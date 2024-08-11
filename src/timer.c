@@ -150,7 +150,7 @@ char * NaiveTime_to_string(NaiveTime time) {
   return output;
 }
 
-extern inline char * Timer_time_left(Timer *restrict timer)
+extern inline char * Timer_time_left(const Timer *restrict timer)
 {
   NaiveTime time_left = divide_seconds_to_naive_time(timer->seconds);
 
@@ -158,7 +158,7 @@ extern inline char * Timer_time_left(Timer *restrict timer)
 }
 
 struct timer_format_handler_args{
-  Timer *restrict timer;
+  const Timer *restrict timer;
   char format_char;
 };
 
@@ -206,13 +206,13 @@ Timer_format_character(void *restrict arguments, char format_char)
   return str;
 }
 
-extern inline char * Timer_resolve_format(Timer *restrict timer, char const *format)
+extern inline char * Timer_resolve_format(const Timer *restrict timer, char const *format)
 {
   struct timer_format_handler_args args = {.timer = timer };
   return resolve_format(format,Timer_format_character, &args);
 }
 
-extern inline void Timer_print_format(Timer *restrict timer, const char * format)
+extern inline void Timer_print_format(const Timer *restrict timer, const char * format)
 {
   char * str = Timer_resolve_format(timer, format);
   puts(str);
@@ -221,14 +221,14 @@ extern inline void Timer_print_format(Timer *restrict timer, const char * format
 
 // This method DOES NOT flush the output afterwards.
 // Do the flushing yourself (if you need to)
-extern inline void Timer_print(Timer *restrict timer)
+extern inline void Timer_print(const Timer *restrict timer)
 {
   char * timer_str = Timer_time_left(timer);
   fputs(timer_str, stdout);
   free(timer_str);
 }
 
-extern inline const char * Timer_before_time(TimerType type)
+extern inline const char * Timer_before_time(const TimerType type)
 {
   switch (type) {
     case POMODORO_TYPE:
@@ -244,7 +244,7 @@ extern inline const char * Timer_before_time(TimerType type)
       return "";
   }
 }
-extern inline void Timer_print_before_time(Timer timer)
+extern inline void Timer_print_before_time(const Timer timer)
 {
   const char * before_time = Timer_before_time(timer.type);
   printf("%s", before_time);
