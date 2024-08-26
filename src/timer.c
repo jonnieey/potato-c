@@ -89,6 +89,11 @@ extern inline void Timer_initialize(Timer *restrict timer)
 {
   timer->pomodoro_count = timer->initial_pomodoro_count;
   timer->type = POMODORO_TYPE;
+  if (strcmp(pomodoro_init_state, "paused") == 0) {
+      timer->paused = 1;
+  } else {
+      timer->paused = 0;
+  }
 }
 
 extern inline void Timer_set_default(Timer *restrict timer)

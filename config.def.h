@@ -16,6 +16,8 @@ static const char * long_break_before_time = "LB";
 
 static const char * timer_format = "%b %t P %p";
 
+static const char * pomodoro_init_state = "unpaused"; //paused or unpaused
+
 #define TO_NULL " &> /dev/null"
 static const char* ON_POMODORO_START_COMMANDS[] = {
   CONFIG_DIR "/on-pomodoro.sh" TO_NULL
